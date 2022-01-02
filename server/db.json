@@ -1,0 +1,18 @@
+{
+  "products": [
+    {
+      "name": "آيفون ۱۳",
+      "price": "10000",
+      "category": "mobile",
+      "description": "گوشی موبايل",
+      "id": 1
+    },
+    {
+      "name": "آيفون ۱۳",
+      "price": "10000",
+      "category": "mobile",
+      "description": "گوشی موبايل",
+      "id": 2
+    }
+  ]
+}
