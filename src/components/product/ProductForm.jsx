@@ -1,13 +1,13 @@
-import React from 'react'
+import React from 'react';
 
-import { useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form';
 
 const ProductForm = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm()
+  } = useForm();
 
   return (
     <form onSubmit={handleSubmit((data) => onSubmit(data))}>
@@ -18,11 +18,16 @@ const ProductForm = ({ onSubmit }) => {
           </label>
           <input
             type="text"
+            {...register('name', {
+              required: 'وارد کردن نام محصول اجباری است',
+            })}
             className={`form-control${errors.name ? ' is-invalid' : ''}`}
             data-testid="name-input"
             placeholder="گوشی آیفون"
           />
-          <div className="invalid-feedback"></div>
+          {errors.name && (
+            <div className="invalid-feedback">{errors.name.message}</div>
+          )}
         </div>
         <div className="form-group col-md-6">
           <label htmlFor="price-input" className="form-label">
@@ -30,11 +35,21 @@ const ProductForm = ({ onSubmit }) => {
           </label>
           <input
             type="number"
+            {...register('price', {
+              required: 'وارد کردن قیمت اجباری است',
+              min: {
+                value: 100,
+                message: 'مقدار قیمت باید حداقل 100 باشد',
+              },
+            })}
             className={`form-control${errors.price ? ' is-invalid' : ''}`}
             data-testid="price-input"
             placeholder="1000"
           />
-          <div className="invalid-feedback"></div>
+
+          {errors.price && (
+            <div className="invalid-feedback">{errors.price.message}</div>
+          )}
         </div>
       </div>
       <div className="row mt-4">
@@ -42,7 +57,11 @@ const ProductForm = ({ onSubmit }) => {
           <label htmlFor="category-select" className="form-label">
             دسته‌بندی
           </label>
-          <select className="form-select" data-testid="category-select">
+          <select
+            className="form-select"
+            {...register('category')}
+            data-testid="category-select"
+          >
             <option value="mobile">موبایل</option>
             <option value="book">کتاب</option>
             <option value="tshirt">تیشرت</option>
@@ -54,6 +73,7 @@ const ProductForm = ({ onSubmit }) => {
           </label>
           <textarea
             className={`form-control${errors.description ? ' is-invalid' : ''}`}
+            {...register('description')}
             data-testid="description-textarea"
             rows="3"
           />
@@ -67,7 +87,7 @@ const ProductForm = ({ onSubmit }) => {
         افزودن محصول
       </button>
     </form>
-  )
-}
+  );
+};
 
-export default ProductForm
+export default ProductForm;
